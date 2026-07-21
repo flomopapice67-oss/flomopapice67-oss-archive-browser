@@ -1,26 +1,26 @@
 # Google Homepage Archive Browser - Flash 11 SWF
 
-A standalone Flash 11 application for browsing archived Google homepage snapshots with an interactive year slider.
+A standalone Flash 11 application for browsing archived Google homepage snapshots with an interactive year slider and search functionality.
 
 ## Features
 
-- **Year Slider**: Navigate through Google homepage archives from 1998 to present
-- **Archive Preview**: View historical snapshots of Google's homepage
-- **Flash 11 Application**: Standalone SWF player application
-- **Custom Archive Interface**: Browse archived versions without relying on Wayback Machine
+- **🔍 Search Bar**: Search archives by year or keyword
+- **🎚️ Year Slider**: Navigate through Google homepage archives from 1998 to present
+- **📸 Archive Preview**: View historical snapshots of Google's homepage
+- **⚙️ Flash 11 Application**: Standalone SWF player application
+- **🌐 Custom Archive Interface**: Browse archived versions without relying on Wayback Machine
 
 ## Project Structure
 
 ```
 ├── src/
 │   ├── GoogleArchiveBrowser.as          # Main Flash application
-│   ├── components/
-│   │   ├── YearSlider.as                # Year slider component
-│   │   ├── ArchiveViewer.as             # Archive snapshot viewer
-│   │   └── ArchiveData.as               # Archive data handler
-│   └── utils/
-│       ├── ArchiveLoader.as             # Archive snapshot loader
-│       └── DateUtils.as                 # Date utility functions
+│   └── components/
+│       ├── YearSlider.as                # Year slider component
+│       ├── ArchiveViewer.as             # Archive snapshot viewer
+│       ├── ArchiveData.as               # Archive data handler
+│       ├── SearchBar.as                 # Search input component
+│       └── SearchEngine.as              # Search filtering engine
 ├── assets/
 │   └── archives/                        # Archive snapshot images
 ├── bin/
@@ -83,10 +83,17 @@ Open `index.html` in a modern browser with Flash support enabled.
 
 ## Usage
 
-1. **Launch the application** by opening the SWF file
-2. **Use the year slider** at the top to select a year (1998-2024)
-3. **View the archived snapshot** in the main viewer area
-4. **Year label** updates in real-time as you drag the slider
+### Search Archives
+1. **Enter a search query** in the search bar
+2. **Search by year**: Type a year (e.g., "2005")
+3. **Search by keyword**: Type keywords from the title (e.g., "Google")
+4. **Press Enter** or click the "Search" button
+5. **Results** show matching snapshots
+
+### Browse by Year
+1. **Use the year slider** at the top to select a year (1998-2024)
+2. **View the archived snapshot** in the main viewer area
+3. **Year label** updates in real-time as you drag the slider
 
 ## Architecture
 
@@ -95,9 +102,23 @@ Open `index.html` in a modern browser with Flash support enabled.
 #### GoogleArchiveBrowser.as
 Main application class that orchestrates the UI and data flow:
 - Initializes stage and components
-- Manages year slider and archive viewer
-- Handles year selection events
-- Loads archive snapshots based on selected year
+- Manages search bar, year slider, and archive viewer
+- Handles search and year selection events
+- Loads archive snapshots based on user input
+
+#### SearchBar.as
+Search input interface:
+- Text input field for queries
+- Search button
+- Results counter display
+- Keyboard support (Enter to search)
+
+#### SearchEngine.as
+Search and filtering logic:
+- Searches by year (numeric queries)
+- Searches by title and URL
+- Returns matching snapshots
+- Avoids duplicate results
 
 #### YearSlider.as
 Interactive slider component for year selection:
@@ -142,12 +163,33 @@ Snapshots are stored as objects with the following structure:
 { year: 2023, imageUrl: "assets/archives/google_2023.png", sourceUrl: "http://google.com", title: "Google 2023" }
 ```
 
+## Search Examples
+
+### Search by Year
+```
+Query: 2005
+Result: Shows all snapshots from 2005
+```
+
+### Search by Keyword
+```
+Query: Google
+Result: Shows snapshots with "Google" in title or URL
+```
+
+### Search by URL
+```
+Query: google.com
+Result: Shows snapshots from google.com
+```
+
 ## Performance Notes
 
 - Image loading is asynchronous to prevent UI blocking
-- Lazy loading of snapshots (loaded when year selected)
+- Lazy loading of snapshots (loaded when year selected or searched)
 - Automatic image scaling for optimal display
-- Efficient slider event handling
+- Efficient slider and search event handling
+- Search results cached until new query entered
 
 ## Troubleshooting
 
@@ -166,22 +208,30 @@ Snapshots are stored as objects with the following structure:
 - Check Flash Player version (requires 11.0+)
 - Verify stage is properly configured
 
+### Search not working
+- Ensure search query is not empty
+- Check that archive snapshots are properly loaded in ArchiveData
+- Verify year format (e.g., "2005" not "05")
+
 ## Limitations
 
 - Flash Player is deprecated and no longer supported in modern browsers
 - Requires standalone Flash Player or legacy browser support
 - Limited to 2D graphics and basic UI components
 - Cross-domain image loading may require CORS configuration
+- Search is case-insensitive and does partial matching
 
 ## Future Enhancements
 
 - [ ] Convert to HTML5/JavaScript for modern browser support
-- [ ] Add search functionality for finding specific snapshots
-- [ ] Implement comparison mode (side-by-side snapshots)
+- [ ] Add advanced search filters (date range, exact match)
+- [ ] Implement pagination for large result sets
+- [ ] Add comparison mode (side-by-side snapshots)
 - [ ] Add timeline visualization
 - [ ] Export snapshot functionality
 - [ ] Social sharing features
 - [ ] Touch/mobile support
+- [ ] Full-text search within archived pages
 
 ## License
 
