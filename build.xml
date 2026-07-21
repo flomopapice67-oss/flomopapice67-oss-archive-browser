@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GoogleArchiveBrowser" default="compile" basedir=".">
+
+	<!-- Build configuration -->
+	<property name="src.dir" value="src" />
+	<property name="bin.dir" value="bin" />
+	<property name="output.file" value="${bin.dir}/GoogleArchiveBrowser.swf" />
+
+	<!-- Flex SDK paths -->
+	<property name="flex.sdk" value="${FLEX_SDK}" />
+	<property name="mxmlc.exe" value="${flex.sdk}/bin/mxmlc" />
+
+	<!-- Initialize build -->
+	<target name="init">
+		<mkdir dir="${bin.dir}" />
+		<echo message="Build directory created" />
+	</target>
+
+	<!-- Compile ActionScript to SWF -->
+	<target name="compile" depends="init">
+		<echo message="Compiling GoogleArchiveBrowser..." />
+		<exec executable="${mxmlc.exe}">
+			<arg value="-source-path" />
+			<arg value="${src.dir}" />
+			<arg value="-output" />
+			<arg value="${output.file}" />
+			<arg value="-target-player" />
+			<arg value="11.0" />
+			<arg value="-swf-version" />
+			<arg value="20" />
+			<arg value="${src.dir}/GoogleArchiveBrowser.as" />
+		</exec>
+		<echo message="Compilation complete: ${output.file}" />
+	</target>
+
+	<!-- Clean build artifacts -->
+	<target name="clean">
+		<delete dir="${bin.dir}" />
+		<echo message="Build artifacts cleaned" />
+	</target>
+
+	<!-- Rebuild -->
+	<target name="rebuild" depends="clean,compile">
+		<echo message="Rebuild complete" />
+	</target>
+
+</project>

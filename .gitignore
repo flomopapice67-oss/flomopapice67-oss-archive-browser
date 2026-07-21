@@ -1,0 +1,34 @@
+# Compiled SWF files
+*.swf
+bin/
+
+# Build artifacts
+*.swc
+*.abc
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node modules (if using node-based tools)
+node_modules/
+npm-debug.log
+
+# Flex/ActionScript specific
+obj/
+as3/
+
+# Archives
+*.zip
+*.rar
+*.7z
